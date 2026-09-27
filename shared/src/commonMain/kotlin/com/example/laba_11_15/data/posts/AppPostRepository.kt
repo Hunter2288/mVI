@@ -1,0 +1,35 @@
+package com.example.laba_11_15.data.posts
+
+import com.example.laba_11_15.data.common.map
+import com.example.laba_11_15.data.posts.model.requests.NewPost
+import com.example.laba_11_15.data.posts.model.responses.Post
+import com.example.laba_11_15.data.posts.model.responses.Posts
+import com.example.laba_11_15.domain.posts.PostRepository
+import com.example.laba_11_15.data.common.Result
+
+internal class AppPostRepository(
+    private val postApiService: PostApiService
+) : PostRepository {
+
+    override suspend fun getAllPosts(): Result<Posts> {
+        return postApiService.getAllPosts()
+    }
+
+    override suspend fun addPost(post: NewPost): Result<String> {
+        return postApiService.addPost(post).map {
+            it.toString()
+        }
+    }
+
+    override suspend fun updatePost(post: Post): Result<String> {
+        return postApiService.updatePost(post).map {
+            it.toString()
+        }
+    }
+
+    override suspend fun deletePost(postId: Int): Result<String> {
+        return postApiService.deletePost(postId).map {
+            it.toString()
+        }
+    }
+}
